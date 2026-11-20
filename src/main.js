@@ -1,4 +1,4 @@
-// tresD Models (clon) — aplicación principal: UI, estado, medidas, casos.
+// Rodental Models — aplicación principal: UI, estado, medidas, casos.
 // Reimplementación propia inspirada en https://tresdmodels.com/app/
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
@@ -34,7 +34,7 @@ let idSeq = 1;
 const app = document.getElementById('app');
 app.innerHTML = `
 <div class="topbar">
-  <a class="brand" href="#" title="tresD Models (clon)"><span class="logo-txt"><span class="t1">tres</span><span class="t2">D</span><span class="t3"> Models</span></span></a>
+  <a class="brand" href="#" title="Rodental Models"><span class="logo-txt"><span class="t1">Ro</span><span class="t2">dental</span><span class="t3"> Models</span></span></a>
   <button class="btn-primary" id="b-add" hidden>Añadir escáner</button>
   <button class="btn-ghost" id="b-carpeta" hidden>+ Carpeta</button>
   <button class="btn-ghost" id="b-nuevo" hidden>Nuevo caso</button>
@@ -65,19 +65,19 @@ app.innerHTML = `
   </div>
 </div>
 <div class="portada" id="portada">
-  <span class="logo-txt"><span class="t1">tres</span><span class="t2">D</span><span class="t3"> Models</span></span>
+  <span class="logo-txt"><span class="t1">Ro</span><span class="t2">dental</span><span class="t3"> Models</span></span>
   <p class="lema">Arrastra aquí los escáneres (STL, PLY u OBJ, o un ZIP con ellos) o pulsa para buscarlos</p>
   <div class="botones">
     <button class="btn-primary" id="b-add2">Añadir escáner</button>
     <button class="btn-ghost" id="b-carpeta2">Abrir una carpeta</button>
     <button class="btn-ghost" id="b-caso2">Abrir un caso guardado</button>
   </div>
-  <p class="pie">Clon con fines educativos · Los archivos no salen de tu ordenador · <a href="https://tresdmodels.com/app/" target="_blank" rel="noopener">Original: tresD Models</a></p>
+  <p class="pie">Los archivos no salen de tu ordenador</p>
 </div>
 <div class="toasts" id="toasts"></div>
 <div class="carga" id="carga" hidden>
   <div class="caja">
-    <span class="logo-txt"><span class="t1">tres</span><span class="t2">D</span><span class="t3"> Models</span></span>
+    <span class="logo-txt"><span class="t1">Ro</span><span class="t2">dental</span><span class="t3"> Models</span></span>
     <div class="txt" id="carga-txt">Abriendo…</div>
     <div class="barra"><i id="carga-barra"></i></div>
   </div>
