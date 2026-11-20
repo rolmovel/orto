@@ -226,7 +226,7 @@ export async function colorRealista(geo, onTick, arco = '') {
   // umbrales por percentiles (se adapta a cada escáner)
   const ord = Float32Array.from(rug).sort();
   const p = q => ord[Math.min(n - 1, Math.floor(q * n))];
-  const rLo = p(.45), rHi = Math.max(p(.93), rLo + 1e-4);
+  const rLo = p(.5), rHi = Math.max(p(.9), rLo + 1e-4);
   const suave = t => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t); };
   const rugT = i => suave((rug[i] - rLo) / (rHi - rLo));
 
@@ -239,16 +239,47 @@ export async function colorRealista(geo, onTick, arco = '') {
     if (arco === 'inf') return maxY - y;
     return Math.min(y - minY, maxY - y);
   };
-  const DIENTE = 11, FADE = 6;   // mm: corona clínica aproximada + transición suave
+
+  // línea oclusal local: minY/maxY por columna XZ (celdas ~3 mm, vecindad 3x3),
+  // para que la encía pegada a dientes bajos (molares) también se pinte.
+  const celdaXZ = Math.max(tam.x, tam.z) / 24;
+  const colMin = new Map(), colMax = new Map();
+  const ck = (x, z) => x + ',' + z;
+  for (let i = 0; i < n; i++) {
+    const k = ck(Math.floor(pos.getX(i) / celdaXZ), Math.floor(pos.getZ(i) / celdaXZ));
+    const y = pos.getY(i);
+    if (y < (colMin.get(k) ?? 1e9)) colMin.set(k, y);
+    if (y > (colMax.get(k) ?? -1e9)) colMax.set(k, y);
+  }
+  const base = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const cx = Math.floor(pos.getX(i) / celdaXZ), cz = Math.floor(pos.getZ(i) / celdaXZ);
+    let lo = 1e9, hi = -1e9;
+    for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+      const k = ck(cx + dx, cz + dz);
+      if (colMin.has(k) && colMin.get(k) < lo) lo = colMin.get(k);
+      if (colMax.has(k) && colMax.get(k) > hi) hi = colMax.get(k);
+    }
+    const y = pos.getY(i);
+    const dSup = lo < 1e8 ? y - lo : y - minY;
+    const dInf = hi > -1e8 ? hi - y : maxY - y;
+    base[i] = arco === 'sup' ? dSup : arco === 'inf' ? dInf : Math.min(dSup, dInf);
+  }
+
+  const DIENTE = 7, FADE = 5;   // mm: corona clínica aproximada + transición suave
 
   const col = new Float32Array(n * 3);
   // los colores de vértice se interpretan como lineales: convertir de sRGB
-  const marfil = new THREE.Color('#f2e8d2').convertSRGBToLinear();
-  const encia = new THREE.Color('#d9756c').convertSRGBToLinear();
+  const marfil = new THREE.Color('#f4ecda').convertSRGBToLinear();
+  const encia = new THREE.Color('#cf6f68').convertSRGBToLinear();
   const c = new THREE.Color();
   for (let i = 0; i < n; i++) {
     const tOcl = suave((dOcl(i) - DIENTE) / FADE);
-    const t = Math.min(1, Math.max(tOcl * .88, rugT(i) * .3));
+    const tBas = suave((base[i] - DIENTE) / FADE);
+    // la rugosidad solo contribuye lejos del borde oclusal: evita motas en las
+    // caras masticatorias, que son rugosas por naturaleza
+    const wRug = .6 * suave((Math.min(dOcl(i), base[i]) - 2) / 3);
+    const t = Math.min(1, Math.max(tOcl * .8, tBas * .9, rugT(i) * wRug));
     c.copy(marfil).lerp(encia, t);
     // los surcos se oscurecen un poco, como sombras
     const h = Math.sin(i * 127.1) * 43758.5453;
