@@ -1,7 +1,10 @@
-# Modelos de prueba locales (no se publican)
+# Modelos de prueba locales (no se publican salvo samples/)
 *.stl
 *.ply
 *.obj
+!samples/*.stl
+!samples/*.ply
+!samples/*.obj
 
 # Sistema
 Thumbs.db
