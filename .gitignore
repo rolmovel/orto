@@ -1,0 +1,14 @@
+# Modelos de prueba locales (no se publican)
+*.stl
+*.ply
+*.obj
+
+# Sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor/logs
+*.log
+.vscode/
+.idea/

@@ -1,0 +1,51 @@
+/* Tema: paleta y tipografía (Poppins, OFL). Inspirado en la app original, código propio. */
+@font-face{font-family:"Poppins";font-style:normal;font-weight:300;font-display:swap;src:url(../assets/fonts/poppins-latin-300-normal.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/poppins-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-style:normal;font-weight:500;font-display:swap;src:url(../assets/fonts/poppins-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-style:normal;font-weight:600;font-display:swap;src:url(../assets/fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/poppins-latin-700-normal.woff2) format("woff2")}
+
+:root{
+  --green:#004A46; --green2:#10A23B; --mint:#89CBC4; --blue:#ADD9E9;
+  --ok:#10A23B; --warn:#F59E0B; --bad:#E05252; --cyan:#0EA5B7;
+  --font:"Poppins","Segoe UI",system-ui,-apple-system,sans-serif;
+  --radius:12px; --side-w:240px; --vis-w:270px; --fs:1;
+}
+:root[data-theme=light]{
+  --window-bg:#FFFFFF; --side-bg:#F2F6F5; --surface:#FFFFFF; --surface2:#EEF4F3;
+  --border:#D5E1DF; --text:#1B2A28; --text2:#373736; --hint:#5B6A68; --muted:#7B8A88;
+  --accent:#004A46; --accent-hover:#10A23B; --accent-disabled:#B9CBC8;
+  --grad:linear-gradient(108deg,#004A46 0%,#0F8A3C 100%);
+  --grad-h:linear-gradient(108deg,#063F3C 0%,#10A23B 100%);
+  --grad-text:#FFFFFF;
+  --seg-bg:#EEF4F3; --seg-hover:#E2EEEC; --seg-border:#C9DAD6; --seg-text:#004A46;
+  --ghost-bg:#F2F6F5; --ghost-hover:#E2EEEC; --ghost-border:#D5E1DF; --ghost-text:#004A46;
+  --trash-fg:#D04545; --trash-bd:#E2B4B4; --trash-bg:#FDEEEE;
+  --viewer-bg:#FFFFFF; --menu-bg:#FFFFFF; --menu-text:#1B2A28; --menu-sel:#EEF4F3;
+  --shadow:0 10px 40px rgba(0,40,36,.14);
+  color-scheme:light;
+}
+:root[data-theme=dark]{
+  --window-bg:#0B0F1A; --side-bg:#0F1523; --surface:#141A28; --surface2:#1C2333;
+  --border:#2A3350; --text:#EEF2FF; --text2:#AEBABA; --hint:#AEBABA; --muted:#8E9A9A;
+  --accent:#89CBC4; --accent-hover:#B6D8E7; --accent-disabled:#3A4A48;
+  --grad:linear-gradient(108deg,#B6D8E7 0%,#97C9C3 50%,#399F48 100%);
+  --grad-h:linear-gradient(108deg,#C9E4EF 0%,#A9D5CF 50%,#4DB05C 100%);
+  --grad-text:#0B0F1A;
+  --seg-bg:#14201F; --seg-hover:#1C2A29; --seg-border:#2C3A39; --seg-text:#89CBC4;
+  --ghost-bg:#16202A; --ghost-hover:#1D2A35; --ghost-border:#2A3350; --ghost-text:#BFE0DC;
+  --trash-fg:#F08A8A; --trash-bd:#5A2E3A; --trash-bg:#2A1620;
+  --viewer-bg:#0B0F1A; --menu-bg:#141A28; --menu-text:#EEF2FF; --menu-sel:#1C2333;
+  --shadow:0 10px 40px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:var(--font); font-size:calc(14px*var(--fs));
+  background:var(--window-bg); color:var(--text);
+  overflow:hidden; -webkit-font-smoothing:antialiased;
+}
+.oculto-visual{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+button{font-family:inherit;cursor:pointer}
+[hidden]{display:none!important}
